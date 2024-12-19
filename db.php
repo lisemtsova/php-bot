@@ -10,8 +10,6 @@ $conn = new mysqli($host, $username, $password, $dbname);
 //проверяем соединение|метод connect_error возвращает описание ошибки, если соединение не установлено
 
 if ($connection->connect_error) {
-    //прекращение скрипта немедленно прекращается, а перед этим выводится строка
-    die("Connection failed: ".$connection->connect_error);
-}
-else echo "Connection succesful";
-?>
+    //прекращение скрипта немедленно прекращается, а перед этим выводится строка 
+    die("Connection failed: " . $connection->connect_error);
+} else echo "Connection succesful";

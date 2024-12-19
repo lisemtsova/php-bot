@@ -7,7 +7,7 @@ $data = '{"update_id":718609979,
 require 'db.php'; //включение и выполнение файла в текущем скрипте
 
 $token = "7550424559:AAGjkC1AMjuShoXQGU5G5iysr0HlKJR48iw";
-$website = "https://api.telegram.org/bot" . $token; //строка с url объединяется с токеном для получения полного url
+$website = "https://api.telegram.org/bot" . $token; //строка с url объединяется с токеном для получения полного url 
 
 //--- Меню с командами
 $commands = [
@@ -19,19 +19,19 @@ $data = [
     'commands' => json_encode($commands)
 ];
 
-$url = $website."/setMyCommands";
+$url = $website . "/setMyCommands";
 file_get_contents($url . '?' . http_build_query($data));
 
 
 //--- Получение данных от Telegram
 $update = file_get_contents("php://input");
 //--- Логи
-$f = fopen('log.txt', 'w'); 
-fwrite($f, $update); 
+$f = fopen('log.txt', 'w');
+fwrite($f, $update);
 fclose($f);
 //--- Обработка данных
 $update = json_decode($update, true); //декодирует строку полученную в формате json. 
-                                                        //принимает строку, возвращает ассоциативный массив
+//принимает строку, возвращает ассоциативный массив
 
 
 
@@ -50,46 +50,45 @@ if (isset($update['message'])) {
                     [
                         ['text' => 'О компании', 'callback_data' => 'companyInfo'],
                     ],
-        
+
                     [
                         ['text' => 'Выгрузка на площадки', 'callback_data' => 'unloading'],
                         ['text' => 'Отзывы', 'callback_data' => 'reviews']
                     ],
-        
+
                     [
                         ['text' => 'Складской учет', 'callback_data' => 'warehouse'],
                         ['text' => 'Поддержка', 'callback_data' => 'support']
                     ],
-        
+
                     [
                         ['text' => 'Ваш сайт-витрина', 'callback_data' => 'website'],
                         ['text' => 'Работа со смартфона', 'callback_data' => 'mobile']
                     ],
-        
+
                     [
                         ['text' => 'Цены и тарифы', 'callback_data' => 'prices'],
                         ['text' => 'FAQ', 'callback_data' => 'FAQ']
                     ],
-        
+
                     [
                         ['text' => 'Бесплатный пробный период', 'callback_data' => 'trial'],
                     ]
                 ]
             ];
-        
+
             $data = [
                 'chat_id' => $chatId,
                 'text' => "Выберите нужный раздел",
                 'reply_markup' => json_encode($inline_keyboard)
             ];
             sendButtons($data);
-        break;
+            break;
         default:
             sendMessage($chatId, "Неизвестная команда");
             break;
     }
-} 
-elseif (isset($update['callback_query'])) {
+} elseif (isset($update['callback_query'])) {
     $chatId = $update['callback_query']['message']['chat']['id'];
     $callbackData = $update['callback_query']['data'];
 
@@ -98,7 +97,7 @@ elseif (isset($update['callback_query'])) {
     //привязываем параметр ("s" указывает, что параметр — это строка)
     $stmt->bind_param("s", $callbackData);
     $stmt->execute(); //выполняем запрос
-    
+
     $result = $stmt->get_result(); //получаем результат
     $result = $result->fetch_assoc(); //возвращает результат в виде ассоц. массива
 
@@ -108,16 +107,17 @@ elseif (isset($update['callback_query'])) {
 
 //--- Возврат в бота
 
-function sendButtons($data) {
+function sendButtons($data)
+{
     global $website;
     $url = $website . "/sendMessage?" . http_build_query($data);
-    file_get_contents($url);   
+    file_get_contents($url);
 }
 
 function sendMessage($chatId, $text)
 {
     global $website;
-    $url = $website."/sendMessage";
+    $url = $website . "/sendMessage";
 
     $postData = [
         'chat_id' => $chatId,
@@ -135,5 +135,3 @@ function sendMessage($chatId, $text)
     $context = stream_context_create($options); //создает контекст потока, который будет использоваться для выполнения HTTP-запроса
     file_get_contents($url, false, $context);
 }
-
-?>
