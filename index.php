@@ -34,7 +34,6 @@ $update = json_decode($update, true); //декодирует строку пол
 //принимает строку, возвращает ассоциативный массив
 
 
-
 if (isset($update['message'])) {
     $chatId = $update['message']['chat']['id'];
     $text = $update['message']['text'];
