@@ -9,6 +9,7 @@ require 'db.php'; //включение и выполнение файла в т�
 $token = "7550424559:AAGjkC1AMjuShoXQGU5G5iysr0HlKJR48iw";
 $website = "https://api.telegram.org/bot" . $token; //строка с url объединяется с токеном для получения полного url 
 
+
 //--- Меню с командами
 $commands = [
     ['command' => 'start', 'description' => 'Запуск'],
