@@ -4,6 +4,7 @@ $data = '{"update_id":718609979,
 "message":{"message_id":113,"from":{"id":5113901919,"is_bot":false,"first_name":"Lisa","username":"lisemtsova","language_code":"ru"},
 "chat":{"id":5113901919,"first_name":"Lisa","username":"lisemtsova","type":"private"},"date":1733933124,"text":"123"}}';
 */
+
 require 'db.php'; //включение и выполнение файла в текущем скрипте
 
 $token = "7550424559:AAGjkC1AMjuShoXQGU5G5iysr0HlKJR48iw";
